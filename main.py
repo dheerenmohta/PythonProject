@@ -2,6 +2,9 @@
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+import operator
+
+from operator import itemgetter
 
 students = {'name': 'd', "subject": "CSE", "grades": (66, 77, 88)}
 
@@ -100,11 +103,62 @@ def named(**kwargs):
 def named1(name, subject, grades):
     print(name, subject, grades)
 
+
 def both(*args, **kwargs):
     print(args)
     print(kwargs)
 
-# Press the green button in the gutter to run the script.
+
+def devide(dividend, divisor):
+    try:
+        return dividend / divisor
+    except ArithmeticError as e:
+        print(f" error came lets continue")
+    finally:
+        print("I will run all the time")
+
+
+def first_class_fun_calculate(*values, operator):
+    return operator(*values)
+
+
+def get_friend_name(friend):
+    return friend["name"]
+
+
+friends = [{"name": "a", "age": 1},
+           {"name": "b", "age": 1},
+           {"name": "c", "age": 1}]
+user = {"username": "a", "access_level": "admin"}
+
+
+def get_admin_password():
+    return "123"
+
+
+def search_friend1(seq, expected, finder):
+    for element in seq:
+        if finder(element) == expected:
+            return f"found element in {element}"
+    raise RuntimeError(f"element is not found")
+
+
+def friend_finder(friends):
+    return friends["name"]
+
+
+def search_friend(seq, param, get_friend_name1):
+    for elm in seq:
+        if get_friend_name1(elm) == param:
+            print(elm)
+    raise RuntimeError(f"could not find element with name {param}")
+
+
+def secure_function(get_admin_password1):
+    if user["access_level"] == "admin":
+        return get_admin_password1
+
+
 if __name__ == '__main__':
     name = "Hello {}  today is {}"
     print_hi(name.format("Dheeren", "tue"))
@@ -113,5 +167,13 @@ if __name__ == '__main__':
     named(x=1, y=2)
     named1(**students)
     named(**students)
-    both(1,2,3,name="a",age= 2)
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    both(1, 2, 3, name="a", age=2)
+
+    print(first_class_fun_calculate(20, 0, operator=devide))
+    #print(search_friend(friends, "a", get_friend_name))
+    #print(search_friend(friends, "a", itemgetter))
+    get_admin_password2 = secure_function(get_admin_password)
+    print(get_admin_password2())
+    print(search_friend1(friends, "a", friend_finder))
+    print(search_friend1(friends, "a", lambda friend: friend["name"]))
+    print(search_friend1(friends, "a", itemgetter("name")))
